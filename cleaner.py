@@ -6,14 +6,21 @@ class yearly_sheet():
     def __init__(self, year, sheet):
         # save the name of the sheet ...represently the year of operation
         self.year = year
-        self.sheet = self.cleaner(sheet)
-        return
+        self.sheet = sheet
+        self.selectUserRuns()
+        self.properColumnNames()
     # METHODS
-    def cleaner(self,sheet):
+    def selectUserRuns(self):
         #select days of user runs based on the date column
-        cleanedSheet=self.selectUserRuns(sheet)
-        return cleanedSheet
-    def selectUserRuns(self,sheet):
-        #select days of user runs based on the date column
-        userRuns = sheet[sheet.iloc[:,1].notna()]
-        return userRuns
+        self.sheet = self.sheet[self.sheet.iloc[:,1].notna()]
+        return 
+    def properColumnNames(self):
+        #properly label columns, year 2019 is an exception which lacks Requested Hours label
+        if self.year>2019:
+            self.sheet=self.sheet.set_axis(['Month','Date','Operators','8-9','9-10','10-11','11-12','12-13','13-14','14-15','15-16','16-17','17-18','18-19','19-20','20-21','21-22','22-23','Net Beamtime','Total Time (Including standby)','Requested hours','Notes1','Notes2','Notes3','Notes4'], axis=1)
+        else:
+            self.sheet=self.sheet.set_axis(['Month','Date','Operators','8-9','9-10','10-11','11-12','12-13','13-14','14-15','15-16','16-17','17-18','18-19','19-20','20-21','21-22','22-23','Net Beamtime','Total Time (Including standby)','Notes1','Notes2','Notes3','Notes4'], axis=1)        
+        #the first row should be discarded as it is the original column names
+        if self.year==2019 or self.year==2020:
+            self.sheet=self.sheet.iloc[1: , :]
+        return
