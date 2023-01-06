@@ -78,7 +78,7 @@ def yearly_histogram_net_hours(data):
         ax.text(rect.get_x() + rect.get_width() / 2, height+0.01, label,
                 ha='center', va='bottom', size=14, fontdict=None)
 
-    plt.savefig('net_hours.png',bbox_inches='tight')
+    plt.savefig('Figures/net_hours.png',bbox_inches='tight')
     return 
 def average_net_beamtime_per_day(data):
     totalHours = np.array([])
